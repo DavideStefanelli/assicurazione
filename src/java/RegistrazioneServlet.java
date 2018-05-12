@@ -41,6 +41,11 @@ public class RegistrazioneServlet extends HttpServlet {
             u.setCognome(request.getParameter("cognome"));
             u.setCf(request.getParameter("cf"));
             u.setPassword(request.getParameter("password"));
+            if(request.getParameter("sesso").equals("M")){
+                u.setSesso(Utente.Sesso.Maschio);
+            }else{
+                u.setSesso(Utente.Sesso.Femmina);
+            }
             u.setDatanascita(new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(request.getParameter("datanascita")).getTime()));
             
             userDao.add(u);
