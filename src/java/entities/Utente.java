@@ -5,7 +5,11 @@
  */
 package entities;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.Date;
+import java.util.Base64; 
+import utilis.Util;
 
 /**
  *
@@ -18,8 +22,10 @@ public class Utente extends BeanEntity {
     private String cf;
     private Date datanascita;
     private Date datacreazione;
-    private String password;
+    private String hashedPassword;
+    private String salePassword;
     private Sesso sesso;
+    
     public enum Sesso {Maschio, Femmina}
     
     public Sesso getSesso() {
@@ -30,14 +36,32 @@ public class Utente extends BeanEntity {
         this.sesso = sesso;
     }
     
-    public String getPassword() {
-        return password;
+    public void setHashedPassword(String pass){
+        this.hashedPassword = pass;
+    }
+    
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getSalePassword() {
+        return salePassword;
     }
-     
+    
+    
+
+    public void setSalePassword(String salePassword) {
+        this.salePassword = salePassword;
+    } 
+    
+    public boolean passwordMatches(String pass){
+        String computedHash = Util.hashPassword(pass, salePassword);
+        if(this.hashedPassword.equals(computedHash)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
     public String getCognome() {
         return cognome;

@@ -5,7 +5,9 @@
 --%>
 
 
+<%@page import="utilis.Util"%>
 <%@page import="entities.Utente"%>
+
 <%
 
     Object userObj = session.getAttribute("utente");
@@ -21,7 +23,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/assicurazione/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <title>JSP Page</title>
     </head>
     <body>
@@ -31,34 +33,34 @@
 
                 <div class="card mb-4 box-shadow">
                     <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Pro</h4>
+                        <h4 class="my-0 font-weight-normal">Calcola costi assicurativi</h4>
                     </div>
                     <div class="card-body">
-                        <h1 class="card-title pricing-card-title">€1000 <small class="text-muted">/ y</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>20 users included</li>
-                            <li>10 GB of storage</li>
-                            <li>Priority email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <form>
-                            <select class="form-control">
+                        <h1 class="card-title pricing-card-title">€<%= Util.printDefault(session.getAttribute("importo"), "0") %> <small class="text-muted">/ y</small></h1>
+                        <form action="assicurazione">
+                            <select class="form-control" name="classe">
                                 <% for (int i = 1; i <= 18; i++) {%>
-                                <option name="classe" value="<%=i%>"><%=i%></option>                       
+                                    <option name="classe" value="<%=i%>"><%=i%></option>                       
                                 <% } %>
                             </select>
-                            <select class="form-control">
+                            <select class="form-control" name="eta">
                                 <% for (int i = 16; i <= 80; i++) {%>
-                                <option name="eta" value="<%=i%>"><%=i%></option>                       
+                                    <option name="eta" value="<%=i%>"><%=i%></option>                       
                                 <% }%>
                             </select>
                             <button type="submit" class="btn btn-lg btn-block btn-primary">Calcola</button>
                         </form>
+                        
+                        <br>
+                        <form method="GET" action="login">
+                            <input type="hidden" name="action" value="logout">
+                            <button type="submit" class="btn btn-block">Logout</button>
+                        </form> 
                     </div>
                 </div> 
 
             </div>
 
-            <script src="/assicurazione/js/bootstrap.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

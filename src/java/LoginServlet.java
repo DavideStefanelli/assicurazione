@@ -13,32 +13,41 @@ import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
  
-    UserDao userDao = null;
     
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        userDao = new UserDao(); 
+        super.init(config); 
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
+        String action = request.getParameter("action");
+        System.out.println("GET METHOD");
+        if(action.equals("logout")){ 
+            System.out.println(action);
+            request.getSession().invalidate();
+            response.sendRedirect("login.jsp");
+        }
     }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+        UserDao userDao = new UserDao();
         
         try{
 
             String userEmail = request.getParameter("email"); 
             String password = request.getParameter("password");
             
-            Utente utente = (Utente)userDao.find(userEmail);
+            Utente utente = (Utente)userDao.find(userEmail, password);
             
-            if(utente == null || (utente.getPassword().equals(password) == false)){ 
-                response.sendRedirect("login.jsp"); 
+            if(utente == null || (utente.passwordMatches(password) == false)){ 
+                response.sendRedirect("login.jsp?status=fail"); 
             } else {                 
                 HttpSession sessione = request.getSession();
                 sessione.setAttribute("utente", utente);
                 response.sendRedirect("assicurazione.jsp");
             }
-            
-            
+             
         } catch(Exception ex) {
             ex.printStackTrace();
         }

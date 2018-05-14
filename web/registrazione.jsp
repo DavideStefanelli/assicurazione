@@ -6,14 +6,20 @@
         <title>Registrazione</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/assicurazione/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     </head>
 
-    <style> 
+    <style>
+        
         .form-signin{
             max-width: 330px; 
             margin: auto;
         }
+        
+        .form-control {
+            margin-bottom: .7vw;
+        }
+        
     </style>
 
     <body>
@@ -47,10 +53,12 @@
                 </label>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Registrati</button>
+                
+                <a href="login.jsp"> Torna al login </a>
             </form>
         </div>
 
-        <script src="/assicurazione/js/bootstrap.min.js"></script>     
+        <script src="js/bootstrap.min.js"></script>     
     </body>
 
 
